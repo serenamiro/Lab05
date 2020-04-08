@@ -2,8 +2,10 @@ package it.polito.tdp.anagrammi;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import it.polito.tdp.anagrammi.model.Model;
 import javafx.event.ActionEvent;
@@ -13,6 +15,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
+	private List<String> trovate = new ArrayList<>();
+	private Set<String> corrette = new HashSet<>();
+	private List<String> errate = new ArrayList<>();
 	
 	private Model model;
 
@@ -40,9 +45,7 @@ public class FXMLController {
     @FXML
     void doCalcolaAnagrammi(ActionEvent event) {
     	String parola = txtInput.getText();
-    	List<String> trovate = this.model.anagrammi(parola);
-    	List<String> corrette = new ArrayList<>();
-    	List<String> errate = new ArrayList<>();
+    	trovate = this.model.anagrammi(parola);
     	for(String s : trovate) {
     	  	if(this.model.isCorrect(s)) {
     	  		corrette.add(s);
@@ -69,6 +72,9 @@ public class FXMLController {
 
     @FXML
     void doReset(ActionEvent event) {
+    	trovate.clear();
+    	corrette.clear();
+    	errate.clear();
     	txtInput.clear();
     	txtCorretti.clear();
     	txtErrati.clear();
